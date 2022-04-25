@@ -33,13 +33,21 @@ export default class Board {
     }
   }
 
-  moveUp(): void {}
+  moveUp(): void {
+    console.log("up");
+  }
 
-  moveDown(): void {}
+  moveDown(): void {
+    console.log("down");
+  }
 
-  moveLeft(): void {}
+  moveLeft(): void {
+    console.log("left");
+  }
 
-  moveRight(): void {}
+  moveRight(): void {
+    console.log("right");
+  }
 
   generateRandNumber() {
     let x: number = Math.floor(Math.random() * 4);

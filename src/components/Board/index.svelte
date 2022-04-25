@@ -1,13 +1,29 @@
 <script>
     import GameBoard from "./GameLogic/board"
     import Colors from "./Colors"
-    console.log(Colors[2])
-    let game = new GameBoard();
+    import Commands from "./Commands"
+    let game;
+    let board;
+
+    function startNewGame() {
+        game = new GameBoard();
+        board = game.board
+        document.addEventListener("keydown", (e) => {
+            const move = game.move(Commands[e.key])
+            console.log(e.key)
+        })
+    }
+
+    // document.addEventListener("keydown", (e) => {
+    //     console.log("wee")
+    // })
+
+    (() => startNewGame())()
 </script>
 
 <div class="game_section">
     <div class="board_background">
-        {#each game.board as row }
+        {#each board as row }
         <div class="row">
             {#each row as cell }
             {#if cell}
