@@ -4,19 +4,31 @@
     import Commands from "./Commands"
     let game;
     let board;
+    let gameOver = false;
+
+    function move(e) {
+        game.move(Commands[e.key], updateBoard)
+        board = game.board
+        console.log(board)
+        if (game.gameOver) {
+            endGame()
+        }
+    }
 
     function startNewGame() {
         game = new GameBoard();
         board = game.board
-        document.addEventListener("keydown", (e) => {
-            const move = game.move(Commands[e.key])
-            console.log(e.key)
-        })
+        document.addEventListener("keydown", move)
     }
 
-    // document.addEventListener("keydown", (e) => {
-    //     console.log("wee")
-    // })
+    function endGame() {
+        gameOver = True; 
+        document.removeEventListener("keydown", move)
+    }
+
+    function updateBoard(newBoard) {
+        board = newBoard;
+    }
 
     (() => startNewGame())()
 </script>
@@ -37,6 +49,9 @@
         </div>
         {/each}
     </div>
+    {#if gameOver}
+        <div>Game over</div>
+    {/if}
 </div>
 
 <style>

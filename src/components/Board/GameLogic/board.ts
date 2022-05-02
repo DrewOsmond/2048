@@ -1,11 +1,14 @@
 export default class Board {
   board: GameBoard;
   score: number;
+  gameOver: boolean;
 
   constructor() {
     this.board = this.generateBoard();
     this.score = 0;
+    this.gameOver = false;
 
+    this.generateRandNumber();
     this.generateRandNumber();
   }
 
@@ -34,11 +37,23 @@ export default class Board {
   }
 
   moveUp(): void {
-    console.log("up");
+    let moved: boolean = false;
+
+    for (let i = this.board.length - 2; i >= 0; i--) {}
   }
 
   moveDown(): void {
-    console.log("down");
+    let moved: boolean = false;
+    for (let i = this.board.length - 2; i >= 0; i--) {
+      const row: Row = this.board[i];
+      for (let j = 3; j >= 0; j--) {
+        const cell: Cell = row[j];
+        const belowCell: Cell = this.board[i + 1][j];
+      }
+    }
+    if (moved) {
+      this.generateRandNumber();
+    }
   }
 
   moveLeft(): void {
@@ -49,19 +64,56 @@ export default class Board {
     console.log("right");
   }
 
-  generateRandNumber() {
-    let x: number = Math.floor(Math.random() * 4);
-    let y: number = Math.floor(Math.random() * 4);
-    console.log(this.board);
-    while (this.board[x][y] !== null) {
-      x = Math.floor(Math.random() * 4);
-      y = Math.floor(Math.random() * 4);
+  generateRandNumber(): void {
+    const availableCells: [number, number][] = this.grabAvailableCells();
+    if (availableCells.length === 0) return this.isGameOver();
+
+    const [x, y] =
+      availableCells[Math.floor(Math.random() * availableCells.length)];
+    this.board[x][y] = 2;
+  }
+
+  grabAvailableCells(): [number, number][] {
+    const availableCells: [number, number][] = [];
+
+    for (let i = 0; i < this.board.length; i++) {
+      const row: Row = this.board[i];
+      for (let j = 0; j < row.length; j++) {
+        const cell: Cell = row[j];
+        if (!cell) {
+          availableCells.push([i, j]);
+        }
+      }
     }
 
-    this.board[x][y] = 2;
+    return availableCells;
+  }
+
+  isGameOver(): void {
+    for (let i = 0; i < this.board.length; i++) {
+      const row: Row = this.board[i];
+      for (let j = 0; j < row.length; j++) {
+        const cell: Cell = row[j];
+        const left: Cell = row[j - 1];
+        const right: Cell = row[j + 1];
+        const upper: Cell = row[i - 1] ? row[i - 1][j] : undefined;
+        const downward: Cell = row[i + 1] ? row[i + 1][j] : undefined;
+
+        if (
+          cell === left ||
+          cell === right ||
+          cell === upper ||
+          cell === downward
+        ) {
+          return;
+        }
+      }
+    }
+
+    this.gameOver = true;
   }
 }
 
 type Row = (number | null)[];
-
+type Cell = number | null;
 type GameBoard = Row[];

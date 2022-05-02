@@ -1,10 +1,19 @@
-export default {
-  w: "up",
-  a: "left",
-  s: "down",
-  d: "right",
-  ArrowUp: "up",
-  ArrowLeft: "left",
-  ArrowRight: "right",
-  ArrowDown: "down",
-};
+export default class Commands {
+  w: string;
+  a: string;
+  s: string;
+  d: string;
+  ArrowUp: string;
+  ArrowLeft: string;
+  ArrowRight: string;
+  ArrowDown: string;
+
+  static w = "up";
+  static a = "left";
+  static s = "down";
+  static d = "right";
+  static ArrowUp = "up";
+  static ArrowLeft = "left";
+  static ArrowRight = "right";
+  static ArrowDown = "down";
+}
